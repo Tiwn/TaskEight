@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: SimSun;
+        }
+        button{
+            padding: 0 20px 0 20px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #4B4B4B;
+            height: 22px;
+            line-height: 22px;
+            border: 1px solid #CCC;
+            opacity: 0.6;
+        }
+        #biggest{
+            width: 500px;
+            height: 700px;
+            margin: 0 auto;
+            border: 1px solid black;
+            margin-top: 25px;
+        }
+        #cover{
+            position: relative;
+            height: 100%;
+            background-color: rgb(104, 102, 204);
+            background-image: url(./img/0.jpg);
+            background-repeat: no-repeat;
+        }
+        #cover > button{
+            position: absolute;
+            top: 30%;
+        }
+        #cover > span{
+            position: absolute;
+            top: 15%;
+            left: 45%;
+            font-family: tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+            color: white;    
+            
+        }
+        #beginbtn{
+            left: 30%;
+        }
+        #rankbtn{
+            right: 35%;
+        }
+        #selectDiffcultydiv{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color:  rgb(104, 102, 204);
+            background-image:url(./img/0.jpg);
+            background-repeat: no-repeat;
+        }
+        #selectnumber{
+            width: 70%;
+            position: absolute;
+            left: 25%;
+            top: 10%;
+            text-align: left;
+        }
+        #selectRange{
+            width: 70%;
+            position: absolute;
+            left: 25%;
+            top: 32%;
+            text-align: left;
+        }
+        #selectokbtn{
+            position: absolute;
+            top: 70%;
+            left: 25%;
+
+        }
+        #back{
+            position: absolute;
+            top: 70%;
+            left: 65%;
+            width: 72px;
+        }
+        #begindiv{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-image:url(./img/0.jpg);
+            background-repeat: no-repeat;
+        }
+        #end{
+            position: absolute;
+            bottom: 0px;
+            height: 10%;
+            width: 100%;
+        }
+        #endbtn{
+            position: absolute;
+            right: 0%;
+            width: 178px;
+            height: 100%;
+            opacity: 0.5;
+        }
+        .endspan{
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            line-height: 70px;
+            height: 100%;
+        }
+        #correctRate{
+            left: 45%;
+        }
+        #rankdiv{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-image:url(./img/0.jpg);
+            background-repeat: no-repeat;
+        }
+        #rankdiv > span{
+            position: absolute;
+            top: 10%;
+            left: 43%;
+            font-family: tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+            color: black; 
+        }
+        #rank{
+            width: 70%;
+            height: 80%;
+            position: absolute;
+            top: 15%;
+            left: 10%;
+        }
+        #rank > div{
+            height: 30px;
+            border: 1px solid black;
+            width: 100%;
+            position: relative;
+            padding-left: 10%;
+        }
+        #rank > div > span{
+            height: 32px;
+            line-height: 32px;
+
+        }
+        .span3{
+            position: absolute;
+            right: 10%;
+        }
+        .span4{
+            position: absolute;
+            right: 50%;
+        }
+        #backInrank{
+            position: absolute;
+            bottom: 15%;
+            right: 6%;
+        }
+        #calculationdiv{
+            width: 100%;
+            height: 90%;
+            overflow: auto;
+            position: relative;
+            font-size: 30px;
+        }
+        #calculationdiv > div{
+            height: 10%;
+            border: 1px solid black;
+        }
+        .F{
+            opacity: 0.5;
+        }
+        .T{
+            opacity: 0.5;
+        }
+        #calculationdiv > div >span{
+            line-height: 65px;
+            height: 65px;
+        }
+        .span2{
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="biggest">
+        <div id="cover">
+            <span style="color: black;">判断题</span>
+            <button id="beginbtn">开始答题</button>
+            <button id="rankbtn">排名</button>
+        </div>
+        <div id="selectDiffcultydiv" hidden>
+            <div id="selectnumber">
+                <form action="" method="get"> 
+                    您希望每次出题的个数是？<br /><br /> 
+                    <label><input name="number" type="radio" value="1" />1</label> 
+                    <label><input name="number" type="radio" value="3" />3</label> 
+                    <label><input name="number" type="radio" value="5" />5</label> 
+                    <label><input name="number" type="radio" value="10" />10</label> 
+                    <label><input name="number" type="radio" value="15" />15</label> 
+                </form>
+            </div>
+            <div id="selectRange">
+                <form action="" method="get"> 
+                    您希望出题范围是？<br /><br /> 
+                    <label><input name="range" type="radio" value="10" />0 ~ 10</label><br/>
+                    <label><input name="range" type="radio" value="50" />0 ~ 50</label> <br/>
+                    <label><input name="range" type="radio" value="100" />0 ~ 100</label> <br/>
+                    <label><input name="range" type="radio" value="1000" />0 ~ 1000</label> <br/>
+                    <label><input name="range" type="radio" value="10000" />0 ~ 10000</label> <br/>
+                </form>
+            </div>
+            <button id="selectokbtn">选择完毕，开始出题</button>
+            <button id="back">返回</button>
+        </div>
+        <div id="begindiv" hidden>
+            <div id="calculationdiv">
+                
+            </div>
+            <div id="end">
+                <span class="endspan" id="endspan">123</span>
+                <button id="endbtn">结束</button>
+            </div>
+        </div>
+        <div id="rankdiv" hidden>
+            <span>排名</span>
+            <div id="rank">
+
+            </div>
+            <button id= "backInrank">返回</button>
+        </div>
+    </div>
+</body>
+<script>
+    var cover = document.getElementById("cover");
+    var beginbtn = document.getElementById("beginbtn");
+    var rankbtn = document.getElementById("rankbtn");
+    var selectDiffcultydiv = document.getElementById("selectDiffcultydiv");
+    var rankdiv = document.getElementById("rankdiv");
+    var selectokbtn = document.getElementById("selectokbtn");
+    var begindiv = document.getElementById("begindiv");
+    var back = document.getElementById("back");
+    var backInrank = document.getElementById("backInrank");
+    var endbtn = document.getElementById("endbtn");
+    var numArr = document.getElementsByName("number");
+    var rangerArr = document.getElementsByName("range");
+    var calculationdiv = document.getElementById("calculationdiv");
+    var endspan =document.getElementById("endspan");
+    var Tarr = document.getElementsByClassName("T");
+    var Farr = document.getElementsByClassName("F");
+    var TorFArr = [];
+    var corrateArr = [];
+    var rataArr = [];
+    var nameArr = [];
+    beginbtn.onclick = function(){
+        var name = prompt("你的姓名是：");
+        if(name == null){
+
+        }
+        else{
+            nameArr.push(name);
+            cover.setAttribute("hidden","true");
+            selectDiffcultydiv.removeAttribute("hidden");
+            numArr[0].checked = true;
+            rangerArr[0].checked = true;
+        }
+    }
+    rankbtn.onclick = function(){
+        cover.setAttribute("hidden","true");
+        rankdiv.removeAttribute("hidden"); 
+        rataArr.sort(function (a, b) {
+            return b - a
+        });
+        var creatAline = function(i){
+            if(i == 0){
+                var div1 = document.createElement("div");
+                var span1 = document.createElement("span");
+                var span2 = document.createElement("span");
+                var span4 = document.createElement("span");
+                span1.innerHTML = "排名";
+                span2.innerHTML = "正确率";
+                span4.innerHTML = "姓名";
+                span2.setAttribute("class","span3");
+                span4.setAttribute("class","span4");
+                div1.append(span1);
+                div1.append(span4);
+                div1.append(span2);
+                rank.append(div1);
+            }
+            else{
+                var div1 = document.createElement("div");
+                var span1 = document.createElement("span");
+                var span2 = document.createElement("span");
+                var span4 = document.createElement("span");
+                var arr = ["一","二","三","四","五","六","七","八","九","十"];
+                span1.innerHTML = "第" + arr[i - 1] + "名 :";
+                span2.innerHTML = rataArr[i - 1];
+                span4.innerHTML = nameArr[i - 1];
+                span2.setAttribute("class","span3");
+                span4.setAttribute("class","span4");
+                div1.append(span1);
+                div1.append(span4);
+                div1.append(span2);
+                rank.append(div1);
+            }
+        }
+        for(var i = 0; i < rataArr.length + 1 && i < 11; i++){
+            let ii = i;
+            creatAline(ii);
+        }
+    }
+    selectokbtn.onclick = function(){
+        selectDiffcultydiv.setAttribute("hidden","true");
+        begindiv.removeAttribute("hidden");
+        //获得num和range
+        var num  = 1;
+        var range = 10;
+        for(var i = 0; i < numArr.length; i++){
+            if(numArr[i].checked){
+                num = numArr[i].value;
+                break;
+            }
+        }
+        for(var i = 0; i < rangerArr.length; i++){
+            if(rangerArr[i].checked){
+                range = rangerArr[i].value;
+                break;
+            }
+        }
+        //出题
+        var createAquestion = function(i){
+            var div = document.createElement("div");
+            var span = document.createElement("span");
+            var span2 = document.createElement("span");
+            var buttonT = document.createElement("button");
+            var buttonF = document.createElement("button");
+            var data1 = parseInt(Math.random() * range);
+            var data2 = parseInt(Math.random() * range);
+            var Probability = parseInt(Math.random() * 100);
+            var result = Probability > 50 ? parseInt(Math.random()*range*2) : data1 + data2;
+            TorFArr.push(data1 + data2 == result ? 1 : 0);
+
+            span.innerHTML =data1 + "+" + data2 + "=" + result;
+            span.style.marginLeft = "8%";
+            span2.setAttribute("class","span2");
+            span2.append(buttonT);
+            span2.append(buttonF);
+            buttonT.innerHTML = "√";
+            buttonF.innerHTML = "×";
+            buttonF.style.width = "80px";
+            buttonF.style.height = "65px";
+            buttonT.style.width = "80px";
+            buttonT.style.height = "65px";
+            buttonF.setAttribute("class","F");
+            buttonT.setAttribute("class","T");
+            buttonF.style.verticalAlign = "top";
+            buttonT.style.verticalAlign = "top";
+            div.append(span);
+            div.append(span2);
+            return div;
+        }
+        for(var i = 0; i < num; i++){
+            calculationdiv.append(createAquestion(i));   
+        }
+
+
+        var tagArr = [];
+        for(var i = 0; i < num; i++){
+            tagArr.push(true);
+        }
+        for(var i = 0; i < Tarr.length; i++){
+            let ii = i;
+            Tarr[ii].onclick = function(){
+                if(tagArr[ii] == true){
+                    if(TorFArr[ii] == 1){
+                        corrateArr.push(1);
+                        endspan.innerHTML = "正确";
+                    }
+                    else{
+                        corrateArr.push(0);
+                        endspan.innerHTML = "错误";
+                    }
+                    tagArr[ii] = false;
+                    console.log(corrateArr);
+                }
+                
+            }
+            Farr[ii].onclick = function(){
+                if(tagArr[ii] == true){
+                    if(TorFArr[ii] == 1){
+                        corrateArr.push(0);
+                        endspan.innerHTML = "错误";
+                        console.log(ii + ":" + TorFArr[ii]);
+                    }
+                    else{
+                        corrateArr.push(1);
+                        endspan.innerHTML = "正确";
+                        console.log(ii + ":" + TorFArr[ii]);
+                    }
+                    tagArr[ii] = false;
+                    console.log(corrateArr);
+                }
+            }
+        }
+        
+
+    }
+    back.onclick = function(){
+        selectDiffcultydiv.setAttribute("hidden","true");
+        cover.removeAttribute("hidden");
+    }
+    backInrank.onclick = function(){
+        rankdiv.setAttribute("hidden","true");
+        cover.removeAttribute("hidden");
+        rank.innerHTML = "";
+    }
+    endbtn.onclick = function(){
+        begindiv.setAttribute("hidden","true");
+        cover.removeAttribute("hidden");
+        var sum = 0;
+        var average = 0;
+        for(var i = 0; i < corrateArr.length; i++){
+            sum += corrateArr[i];
+        }
+        if(corrateArr.length == 0){
+            average = 0;
+        }
+        else{
+            average = (sum/corrateArr.length).toFixed(2);
+        }
+        alert("正确率为:" + average);
+        rataArr.push(average);
+        corrateArr = [];
+        TorFArr = [];
+        calculationdiv.innerHTML = "";
+        endspan.innerHTML = "";
+    }
+
+
+</script>
+</html>
