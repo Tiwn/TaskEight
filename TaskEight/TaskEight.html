@@ -30,7 +30,6 @@
         #cover{
             position: relative;
             height: 100%;
-            background-color: rgb(104, 102, 204);
             background-image: url(./img/0.jpg);
             background-repeat: no-repeat;
         }
@@ -56,7 +55,6 @@
             width: 100%;
             height: 100%;
             position: relative;
-            background-color:  rgb(104, 102, 204);
             background-image:url(./img/0.jpg);
             background-repeat: no-repeat;
         }
@@ -112,6 +110,7 @@
             left: 20%;
             line-height: 70px;
             height: 100%;
+            font-size: 40px;
         }
         #correctRate{
             left: 45%;
@@ -171,7 +170,6 @@
         }
         #calculationdiv > div{
             height: 10%;
-            border: 1px solid black;
         }
         .F{
             opacity: 0.5;
@@ -186,6 +184,16 @@
         .span2{
             position: absolute;
             right: 0;
+        }
+        .onceselect{
+            border: 3px solid rgb(252,25,68);
+        }
+        #calculationdiv > div > .dataspan{
+            display: inline-block;
+            width: 284px;
+            height: 63px;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
         }
     </style>
 </head>
@@ -225,7 +233,7 @@
                 
             </div>
             <div id="end">
-                <span class="endspan" id="endspan">123</span>
+                <span class="endspan" id="endspan"></span>
                 <button id="endbtn">结束</button>
             </div>
         </div>
@@ -239,6 +247,7 @@
     </div>
 </body>
 <script>
+    //获取元素
     var cover = document.getElementById("cover");
     var beginbtn = document.getElementById("beginbtn");
     var rankbtn = document.getElementById("rankbtn");
@@ -255,16 +264,19 @@
     var endspan =document.getElementById("endspan");
     var Tarr = document.getElementsByClassName("T");
     var Farr = document.getElementsByClassName("F");
+    //创建储存信息的数组
     var TorFArr = [];
     var corrateArr = [];
     var rataArr = [];
     var nameArr = [];
+    //开始按钮
     beginbtn.onclick = function(){
+        //输入姓名
         var name = prompt("你的姓名是：");
         if(name == null){
-
+            //为空则不做改变
         }
-        else{
+        else{//不为空跳转
             nameArr.push(name);
             cover.setAttribute("hidden","true");
             selectDiffcultydiv.removeAttribute("hidden");
@@ -272,14 +284,17 @@
             rangerArr[0].checked = true;
         }
     }
+    //排名按钮
     rankbtn.onclick = function(){
+        //跳转
         cover.setAttribute("hidden","true");
         rankdiv.removeAttribute("hidden"); 
-        rataArr.sort(function (a, b) {
+        rataArr.sort(function (a, b) {//降序排序
             return b - a
         });
+        //创建排名中的一行函数
         var creatAline = function(i){
-            if(i == 0){
+            if(i == 0){//创建表头
                 var div1 = document.createElement("div");
                 var span1 = document.createElement("span");
                 var span2 = document.createElement("span");
@@ -294,7 +309,7 @@
                 div1.append(span2);
                 rank.append(div1);
             }
-            else{
+            else{//写入数据
                 var div1 = document.createElement("div");
                 var span1 = document.createElement("span");
                 var span2 = document.createElement("span");
@@ -310,18 +325,20 @@
                 div1.append(span2);
                 rank.append(div1);
             }
-        }
+        }//调用创建函数
         for(var i = 0; i < rataArr.length + 1 && i < 11; i++){
             let ii = i;
             creatAline(ii);
         }
     }
+    //选择难度（出题范围）和题数的按钮完毕的点击事件
     selectokbtn.onclick = function(){
         selectDiffcultydiv.setAttribute("hidden","true");
         begindiv.removeAttribute("hidden");
-        //获得num和range
+        //获得num和range（数量和题的范围），默认为num = 1和range = 10
         var num  = 1;
         var range = 10;
+        //获取选择的题数和难度
         for(var i = 0; i < numArr.length; i++){
             if(numArr[i].checked){
                 num = numArr[i].value;
@@ -334,24 +351,30 @@
                 break;
             }
         }
-        //出题
+        //出题部分
+        //出题函数
         var createAquestion = function(i){
+            //创建需要的元素
             var div = document.createElement("div");
             var span = document.createElement("span");
             var span2 = document.createElement("span");
             var buttonT = document.createElement("button");
             var buttonF = document.createElement("button");
+            //创建随机数data1和data2
             var data1 = parseInt(Math.random() * range);
             var data2 = parseInt(Math.random() * range);
+            //随机生成Probability，根据Probability与50的比较确定result的取值
             var Probability = parseInt(Math.random() * 100);
             var result = Probability > 50 ? parseInt(Math.random()*range*2) : data1 + data2;
+            //将这道题的正确与否记入数组TorFArr中
             TorFArr.push(data1 + data2 == result ? 1 : 0);
-
+            //写入内容到上面创建的元素中并给元素添加属性
+            span.setAttribute("class","dataspan");
+            span.style.paddingLeft = "8%";
             span.innerHTML =data1 + "+" + data2 + "=" + result;
-            span.style.marginLeft = "8%";
+            
             span2.setAttribute("class","span2");
-            span2.append(buttonT);
-            span2.append(buttonF);
+            
             buttonT.innerHTML = "√";
             buttonF.innerHTML = "×";
             buttonF.style.width = "80px";
@@ -362,36 +385,42 @@
             buttonT.setAttribute("class","T");
             buttonF.style.verticalAlign = "top";
             buttonT.style.verticalAlign = "top";
+            //append
+            span2.append(buttonT);
+            span2.append(buttonF);
             div.append(span);
             div.append(span2);
             return div;
         }
+        //循环调用生成判断题
         for(var i = 0; i < num; i++){
             calculationdiv.append(createAquestion(i));   
         }
-
-
-        var tagArr = [];
+        //使用者判断部分
+        var tagArr = [];//判断每个按钮是否还可以点击（默认设定是每个判断题只能判断一次）
         for(var i = 0; i < num; i++){
-            tagArr.push(true);
+            tagArr.push(true);//初始化为可以点击（true）
         }
+        //循环给每个按钮加上点击函数
         for(var i = 0; i < Tarr.length; i++){
             let ii = i;
+            //对号按钮的点击函数
             Tarr[ii].onclick = function(){
                 if(tagArr[ii] == true){
                     if(TorFArr[ii] == 1){
                         corrateArr.push(1);
-                        endspan.innerHTML = "正确";
+                        endspan.innerHTML = "答对啦！";
                     }
                     else{
                         corrateArr.push(0);
-                        endspan.innerHTML = "错误";
+                        endspan.innerHTML = "答错啦！";
                     }
+                    this.setAttribute("class","onceselect");
                     tagArr[ii] = false;
                     console.log(corrateArr);
                 }
-                
             }
+            //错号按钮的点击函数
             Farr[ii].onclick = function(){
                 if(tagArr[ii] == true){
                     if(TorFArr[ii] == 1){
@@ -404,32 +433,35 @@
                         endspan.innerHTML = "正确";
                         console.log(ii + ":" + TorFArr[ii]);
                     }
+                    this.setAttribute("class","onceselect");
                     tagArr[ii] = false;
                     console.log(corrateArr);
                 }
             }
         }
-        
-
     }
+    //返回按钮点击事件
     back.onclick = function(){
         selectDiffcultydiv.setAttribute("hidden","true");
         cover.removeAttribute("hidden");
     }
+    //排名里面的返回按钮的点击事件
     backInrank.onclick = function(){
         rankdiv.setAttribute("hidden","true");
         cover.removeAttribute("hidden");
         rank.innerHTML = "";
     }
+    //结束按钮的点击事件
     endbtn.onclick = function(){
         begindiv.setAttribute("hidden","true");
         cover.removeAttribute("hidden");
+        //计算本次答题的数据并输出正确率，记录正确率留作排名使用
         var sum = 0;
         var average = 0;
         for(var i = 0; i < corrateArr.length; i++){
             sum += corrateArr[i];
         }
-        if(corrateArr.length == 0){
+        if(corrateArr.length == 0){//防止/0
             average = 0;
         }
         else{
@@ -437,12 +469,11 @@
         }
         alert("正确率为:" + average);
         rataArr.push(average);
+        //清除本次试题的痕迹
         corrateArr = [];
         TorFArr = [];
         calculationdiv.innerHTML = "";
         endspan.innerHTML = "";
     }
-
-
 </script>
 </html>
