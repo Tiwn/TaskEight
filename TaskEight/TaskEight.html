@@ -425,17 +425,14 @@
                 if(tagArr[ii] == true){
                     if(TorFArr[ii] == 1){
                         corrateArr.push(0);
-                        endspan.innerHTML = "错误";
-                        console.log(ii + ":" + TorFArr[ii]);
+                        endspan.innerHTML = "答错啦！";
                     }
                     else{
                         corrateArr.push(1);
-                        endspan.innerHTML = "正确";
-                        console.log(ii + ":" + TorFArr[ii]);
+                        endspan.innerHTML = "答对啦！";
                     }
                     this.setAttribute("class","onceselect");
                     tagArr[ii] = false;
-                    console.log(corrateArr);
                 }
             }
         }
